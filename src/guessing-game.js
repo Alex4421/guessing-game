@@ -1,41 +1,27 @@
-module.exports = class GuessingGame {
-    constructor(max) {
-      this.min = 0;
-      this.max = max;
+class GuessingGame {
+    constructor() {
+        this.min;
+        this.max;
+        this.num;
     }
-  
+
+    setRange(min, max) {
+        this.min = min;
+        this.max = max;
+    }
+
     guess() {
-      if (this.max < this.min) {
-        throw new Error("Неверный диапазон");
-      }
-      return Math.floor((this.min + this.max) / 2);
+        this.num = Math.ceil(this.min + (this.max - this.min) / 2);
+        return this.num;
     }
-  
-    lower(guess) {
-      if (guess < this.min || guess > this.max) {
-        throw new Error("Угадывание вне диапазона");
-      }
-      this.max = guess - 1;
+
+    lower() {
+        this.max = this.num;
     }
-  
-    greater(guess) {
-      if (guess < this.min || guess > this.max) {
-        throw new Error("Угадывание вне диапазона");
-      }
-      this.min = guess + 1;
+
+    greater() {
+        this.min = this.num;
     }
-  }
-  
-  const game = new (require('./GuessingGame'))(6118);
-  while (true) {
-    const guess = game.guess();
-    console.log(`Угадывание: ${guess}`);
-    if (guess === 998) {
-      break;
-    } else if (guess < 998) {
-      game.greater(guess);
-    } else {
-      game.lower(guess);
-    }
-  }
-  
+}
+
+module.exports = GuessingGame;
